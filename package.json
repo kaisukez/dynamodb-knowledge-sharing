@@ -1,0 +1,15 @@
+{
+  "name": "dynamodb-experiment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "init": "node init.js",
+    "query": "node query.js"
+  },
+  "author": "kaisukez",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.1066.0"
+  }
+}
