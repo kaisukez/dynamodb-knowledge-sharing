@@ -1,26 +1,35 @@
-require('./awsConfig')
+// https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-dynamodb/index.html
+// https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/dynamodb-example-dynamodb-utilities.html
+// https://stackoverflow.com/questions/68820119/aws-aws-sdk-lib-dynamodb-cannot-read-property-0-of-undefined
+import {
+    DeleteTableCommand,
+    CreateTableCommand,
+} from "@aws-sdk/client-dynamodb"
 
-const AWS = require('aws-sdk')
-const dynamodb = new AWS.DynamoDB();
-const docClient = new AWS.DynamoDB.DocumentClient();
+import {
+    ScanCommand,
+    PutCommand,
+    PutCommandInput,
+} from '@aws-sdk/lib-dynamodb'
 
-const { TABLE_NAME, GSI_1 } = require('./constants')
-const { articles, users, subscriptions } = require('./data')
+import { ddbClient, ddbDocClient } from "./config"
+import { TABLE_NAME, GSI_1 } from './constants'
+import { articles, users, subscriptions } from './data'
+import { Article, User, Subscription } from './types'
 
-// https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html
 
 async function createTable() {
     try {
-        await dynamodb.deleteTable({
+        await ddbClient.send(new DeleteTableCommand({
             TableName: TABLE_NAME,
-        }).promise()
+        }))
     } catch (error) {
         // catch error if you try to delete non-existent table
-        if (!error.name === 'ResourceNotFoundException') {
-            throw error
-        }
+        // if (!error.name === 'ResourceNotFoundException') {
+        //     throw error
+        // }
     }
-    await dynamodb.createTable({
+    await ddbClient.send(new CreateTableCommand({
         TableName: TABLE_NAME,
         KeySchema: [
             {
@@ -79,13 +88,13 @@ async function createTable() {
             ReadCapacityUnits: 10,
             WriteCapacityUnits: 10,
         },
-    }).promise()
+    }))
 }
 
 async function createData() {
     await Promise.all(
         articles
-            .map(article => ({
+            .map((article: Article) => ({
                 TableName: TABLE_NAME,
                 Item: {
                     ...article,
@@ -95,12 +104,12 @@ async function createData() {
                     GSI_1_SK: article.article_upload_datetime,
                 },
             }))
-            .map(params => docClient.put(params).promise())
+            .map((params: PutCommandInput) => ddbDocClient.send(new PutCommand(params)))
     )
     
     await Promise.all(
         users
-            .map(user => ({
+            .map((user: User) => ({
                 TableName: TABLE_NAME,
                 Item: {
                     ...user,
@@ -108,12 +117,12 @@ async function createData() {
                     SK: '#',
                 },
             }))
-            .map(params => docClient.put(params).promise())
+            .map((params: PutCommandInput) => ddbDocClient.send(new PutCommand(params)))
     )
 
     await Promise.all(
         subscriptions
-            .map(subscription => ({
+            .map((subscription: Subscription) => ({
                 TableName: TABLE_NAME,
                 Item: {
                     ...subscription,
@@ -121,22 +130,22 @@ async function createData() {
                     SK: '#',
                 },
             }))
-            .map(params => docClient.put(params).promise())
+            .map((params: PutCommandInput) => ddbDocClient.send(new PutCommand(params)))
     )
 }
 
 async function scanTable() {
-    const mainTable = await docClient.scan({
+    const mainTable = await ddbDocClient.send(new ScanCommand({
         TableName: TABLE_NAME,
-    }).promise()
+    }))
     console.log('table', TABLE_NAME, '\n', mainTable.Items)
 
     console.log('\n------------------------------\n')
 
-    const gsi1 = await docClient.scan({
+    const gsi1 = await ddbDocClient.send(new ScanCommand({
         TableName: TABLE_NAME,
         IndexName: GSI_1,
-    }).promise()
+    }))
     console.log('index', GSI_1, '\n', gsi1.Items)
 }
 

@@ -1,4 +1,6 @@
-const articles = [
+import { Article, User, Subscription } from './types'
+
+export const articles: Article[] = [
     {
         article_id: 'a93cae22-7a9b-4b4f-b6b0-b40db54b4803',
         article_title: 'fake news',
@@ -43,7 +45,7 @@ const articles = [
     },
 ]
 
-const users = [
+export const users: User[] = [
     {
         user_id: 'ea2dd93e-0568-47ef-8004-bc4990425f1a',
         user_username: 'fake_user',
@@ -66,7 +68,7 @@ const users = [
     },
 ]
 
-const subscriptions = [
+export const subscriptions: Subscription[] = [
     {
         subscription_id: 'b48367aa-d040-4430-8279-1c17e2900af9',
         subscription_user_id: users[0].user_id,
@@ -82,9 +84,3 @@ const subscriptions = [
         subscription_payment_status: 'not_pay_yet',
     },
 ]
-
-module.exports = {
-    articles,
-    users,
-    subscriptions,
-}

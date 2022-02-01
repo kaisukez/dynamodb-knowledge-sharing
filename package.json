@@ -3,13 +3,22 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "=17.4"
+  },
   "scripts": {
-    "init": "node init.js",
-    "query": "node query.js"
+    "init": "ts-node init.ts",
+    "query": "ts-node query.ts"
   },
   "author": "kaisukez",
   "license": "MIT",
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.49.0",
+    "@aws-sdk/lib-dynamodb": "^3.49.0",
     "aws-sdk": "^2.1066.0"
+  },
+  "devDependencies": {
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.5"
   }
 }

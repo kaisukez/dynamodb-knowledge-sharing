@@ -1,14 +1,15 @@
-require('./awsConfig')
+// https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-dynamodb/index.html
+// https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/dynamodb-example-dynamodb-utilities.html
+// https://stackoverflow.com/questions/68820119/aws-aws-sdk-lib-dynamodb-cannot-read-property-0-of-undefined
+import { QueryCommand } from "@aws-sdk/lib-dynamodb"
 
-const AWS = require('aws-sdk')
-const dynamodb = new AWS.DynamoDB();
-const docClient = new AWS.DynamoDB.DocumentClient();
+import { ddbDocClient } from "./config"
+import { TABLE_NAME, GSI_1 } from './constants'
+import { articles, users, subscriptions } from './data'
+import { Article, User, Subscription } from './types'
 
-const { TABLE_NAME, GSI_1 } = require('./constants')
-const { articles, users, subscriptions } = require('./data')
-
-async function queryById(id) {
-    const result = await docClient.query({
+async function queryById(id: string) {
+    const result = await ddbDocClient.send(new QueryCommand({
         TableName: TABLE_NAME,
         KeyConditionExpression: '#PK = :id',
         ExpressionAttributeNames: {
@@ -17,13 +18,13 @@ async function queryById(id) {
         ExpressionAttributeValues: {
             ':id': id,
         },
-    }).promise()
+    }))
 
     console.log(result.Items, '\n')
 }
 
-async function queryArticleByCategory(category) {
-    const result = await docClient.query({
+async function queryArticleByCategory(category: Article['article_category']) {
+    const result = await ddbDocClient.send(new QueryCommand({
         TableName: TABLE_NAME,
         IndexName: GSI_1,
         KeyConditionExpression: '#GSI_1_PK = :category',
@@ -33,7 +34,7 @@ async function queryArticleByCategory(category) {
         ExpressionAttributeValues: {
             ':category': category,
         },
-    }).promise()
+    }))
 
     console.log(result.Items, '\n')
 }
