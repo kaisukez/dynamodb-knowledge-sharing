@@ -1,7 +1,7 @@
 // https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-dynamodb/index.html
 // https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/dynamodb-example-dynamodb-utilities.html
 // https://stackoverflow.com/questions/68820119/aws-aws-sdk-lib-dynamodb-cannot-read-property-0-of-undefined
-import { QueryCommand } from "@aws-sdk/lib-dynamodb"
+import { GetCommand, QueryCommand } from "@aws-sdk/lib-dynamodb"
 
 import { ddbDocClient } from "./config"
 import { TABLE_NAME, GSI_1 } from './constants'
@@ -9,18 +9,15 @@ import { articles, users, subscriptions } from './data'
 import { Article, User, Subscription } from './types'
 
 async function queryById(id: string) {
-    const result = await ddbDocClient.send(new QueryCommand({
+    const result = await ddbDocClient.send(new GetCommand({
         TableName: TABLE_NAME,
-        KeyConditionExpression: '#PK = :id',
-        ExpressionAttributeNames: {
-            '#PK': 'PK',
-        },
-        ExpressionAttributeValues: {
-            ':id': id,
+        Key: {
+            PK: id,
+            SK: '#',
         },
     }))
 
-    console.log(result.Items, '\n')
+    console.log(result.Item, '\n')
 }
 
 async function queryArticleByCategory(category: Article['article_category']) {
