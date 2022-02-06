@@ -5,6 +5,7 @@ export interface Article {
     article_title: string
     article_content: Key
     article_category: string
+    article_is_premium: string
     article_upload_datetime: string
 }
 
@@ -20,4 +21,9 @@ export interface Subscription {
     subscription_start_date: string | null
     subscription_end_date: string | null
     subscription_payment_status: string
+}
+
+export interface DateRange {
+    start: string
+    end: string
 }

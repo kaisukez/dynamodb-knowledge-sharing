@@ -23,11 +23,11 @@ async function createTable() {
         await ddbClient.send(new DeleteTableCommand({
             TableName: TABLE_NAME,
         }))
-    } catch (error) {
+    } catch (error: any) {
         // catch error if you try to delete non-existent table
-        // if (!error.name === 'ResourceNotFoundException') {
-        //     throw error
-        // }
+        if (error.name !== 'ResourceNotFoundException') {
+            throw error
+        }
     }
     await ddbClient.send(new CreateTableCommand({
         TableName: TABLE_NAME,
@@ -100,8 +100,23 @@ async function createData() {
                     ...article,
                     PK: article.article_id,
                     SK: '#',
-                    GSI_1_PK: article.article_category,
+                    GSI_1_PK: `${article.article_category}#${article.article_is_premium}`,
                     GSI_1_SK: article.article_upload_datetime,
+                },
+            }))
+            .map((params: PutCommandInput) => ddbDocClient.send(new PutCommand(params)))
+    )
+
+    // denormalizing data (don't forget to update when data is updated or deleted)
+    await Promise.all(
+        articles
+            .map((article: Article) => ({
+                TableName: TABLE_NAME,
+                Item: {
+                    PK: article.article_category,
+                    SK: `${article.article_is_premium}#${article.article_upload_datetime}`,
+                    article_title: article.article_title,
+                    article_id: article.article_id,
                 },
             }))
             .map((params: PutCommandInput) => ddbDocClient.send(new PutCommand(params)))
@@ -138,7 +153,8 @@ async function scanTable() {
     const mainTable = await ddbDocClient.send(new ScanCommand({
         TableName: TABLE_NAME,
     }))
-    console.log('table', TABLE_NAME, '\n', mainTable.Items)
+    console.log('table', TABLE_NAME)
+    console.log(mainTable.Items)
 
     console.log('\n------------------------------\n')
 
@@ -146,7 +162,8 @@ async function scanTable() {
         TableName: TABLE_NAME,
         IndexName: GSI_1,
     }))
-    console.log('index', GSI_1, '\n', gsi1.Items)
+    console.log('index', GSI_1)
+    console.log(gsi1.Items)
 }
 
 async function main() {
