@@ -7,6 +7,7 @@ export interface Article {
     article_category: string
     article_is_premium: string
     article_upload_datetime: string
+    article_user_id: string
 }
 
 export interface User {

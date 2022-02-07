@@ -8,6 +8,7 @@ export const articles: Article[] = [
         article_category: 'CAT',
         article_is_premium: 'TRUE',
         article_upload_datetime: '2021-02-10T17:00:00.000Z',
+        article_user_id: 'ea2dd93e-0568-47ef-8004-bc4990425f1a',
     },
     {
         article_id: '84a4409a-794c-47c4-9a56-0161c864a94e',
@@ -16,6 +17,7 @@ export const articles: Article[] = [
         article_category: 'CAT',
         article_is_premium: 'TRUE',
         article_upload_datetime: '2021-02-21T17:00:00.000Z',
+        article_user_id: 'b40baf3a-4a76-439a-be0e-5f3cd49a6b7d',
     },
     {
         article_id: '919fed0a-8a0d-4ccc-b9f3-5eb387f49579',
@@ -24,6 +26,7 @@ export const articles: Article[] = [
         article_category: 'DOG',
         article_is_premium: 'FALSE',
         article_upload_datetime: '2021-03-11T17:00:00.000Z',
+        article_user_id: '5b52cc97-e777-431f-98c6-4bb5666ef4cc',
     },
     {
         article_id: '6eb7f2b4-5c4a-4e1d-a0ce-23cba6b7dd78',
@@ -32,6 +35,7 @@ export const articles: Article[] = [
         article_category: 'DOG',
         article_is_premium: 'FALSE',
         article_upload_datetime: '2021-03-22T17:00:00.000Z',
+        article_user_id: '480d9298-008e-4228-8e83-e92541235b08',
     },
     {
         article_id: 'fa48dc82-fedd-49ee-8a0d-194c375d2ed4',
@@ -40,6 +44,7 @@ export const articles: Article[] = [
         article_category: 'FISH',
         article_is_premium: 'TRUE',
         article_upload_datetime: '2021-04-12T17:00:00.000Z',
+        article_user_id: 'ea2dd93e-0568-47ef-8004-bc4990425f1a',
     },
     {
         article_id: '212a8d05-39d3-4da5-b95d-04adae4de921',
@@ -48,6 +53,7 @@ export const articles: Article[] = [
         article_category: 'FISH',
         article_is_premium: 'TRUE',
         article_upload_datetime: '2021-04-23T17:00:00.000Z',
+        article_user_id: 'b40baf3a-4a76-439a-be0e-5f3cd49a6b7d',
     },
     {
         article_id: '075ceefb-2ddc-40c3-8c9d-d877f865d678',
@@ -56,6 +62,7 @@ export const articles: Article[] = [
         article_category: 'CAT',
         article_is_premium: 'FALSE',
         article_upload_datetime: '2021-05-13T17:00:00.000Z',
+        article_user_id: '5b52cc97-e777-431f-98c6-4bb5666ef4cc',
     },
     {
         article_id: '7d1f60bb-532c-4344-9902-d8a75e143f98',
@@ -64,6 +71,7 @@ export const articles: Article[] = [
         article_category: 'CAT',
         article_is_premium: 'FALSE',
         article_upload_datetime: '2021-05-24T17:00:00.000Z',
+        article_user_id: '480d9298-008e-4228-8e83-e92541235b08',
     },
     {
         article_id: 'a10715d3-ace2-45cc-8031-85272e0d4be7',
@@ -72,6 +80,7 @@ export const articles: Article[] = [
         article_category: 'DOG',
         article_is_premium: 'TRUE',
         article_upload_datetime: '2021-06-14T17:00:00.000Z',
+        article_user_id: 'ea2dd93e-0568-47ef-8004-bc4990425f1a',
     },
     {
         article_id: '3c65d54c-d741-46db-9040-6dbd1a9bb02a7',
@@ -80,6 +89,7 @@ export const articles: Article[] = [
         article_category: 'DOG',
         article_is_premium: 'TRUE',
         article_upload_datetime: '2021-06-25T17:00:00.000Z',
+        article_user_id: 'b40baf3a-4a76-439a-be0e-5f3cd49a6b7d',
     },
     {
         article_id: '9d61e8d3-7ce1-4ed6-9087-9b6d01d2e4d0',
@@ -88,6 +98,7 @@ export const articles: Article[] = [
         article_category: 'FISH',
         article_is_premium: 'FALSE',
         article_upload_datetime: '2021-07-15T17:00:00.000Z',
+        article_user_id: '5b52cc97-e777-431f-98c6-4bb5666ef4cc',
     },
     {
         article_id: '977d282e-bd9d-431e-ac1d-42bb4c7efb68',
@@ -96,6 +107,7 @@ export const articles: Article[] = [
         article_category: 'FISH',
         article_is_premium: 'FALSE',
         article_upload_datetime: '2021-07-26T17:00:00.000Z',
+        article_user_id: '480d9298-008e-4228-8e83-e92541235b08',
     },
 ]
 

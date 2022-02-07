@@ -86,6 +86,42 @@ async function queryArticleByCategoryUsingGSIMethod(
     return result
 }
 
+async function queryArticlesByUserId(userId: Article['article_user_id']) {
+    const result = await ddbDocClient.send(new QueryCommand({
+        TableName: TABLE_NAME,
+        KeyConditionExpression: '#PK = :userId AND begins_with(SK, :SK)',
+        ExpressionAttributeNames: {
+            '#PK': 'PK',
+        },
+        ExpressionAttributeValues: {
+            ':userId': userId,
+            ':SK': 'ARTICLES'
+        },
+    }))
+
+    console.log('queryArticlesByFromUserId')
+    console.log(result.Items, '\n')
+    return result
+}
+
+async function querySubscriptionsByUserId(userId: Article['article_user_id']) {
+    const result = await ddbDocClient.send(new QueryCommand({
+        TableName: TABLE_NAME,
+        KeyConditionExpression: '#PK = :userId AND begins_with(SK, :SK)',
+        ExpressionAttributeNames: {
+            '#PK': 'PK',
+        },
+        ExpressionAttributeValues: {
+            ':userId': userId,
+            ':SK': 'SUBSCRIPTIONS'
+        },
+    }))
+
+    console.log('querySubscriptionsByUserId')
+    console.log(result.Items, '\n')
+    return result
+}
+
 async function queryWithPagination() {
     const result = await queryArticleByCategoryUsingDenormalizationMethod('FISH', undefined, 2)
     let lastEvaluatedKey = result.LastEvaluatedKey
@@ -116,6 +152,9 @@ async function main() {
                 end: '2021-07-30T17:00:00.000Z',
             },
         )
+
+        await queryArticlesByUserId('ea2dd93e-0568-47ef-8004-bc4990425f1a')
+        await querySubscriptionsByUserId('ea2dd93e-0568-47ef-8004-bc4990425f1a')
 
         await queryWithPagination()
     } catch (error) {

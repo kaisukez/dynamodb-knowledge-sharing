@@ -66,6 +66,29 @@ async function createTable() {
                 },
             },
         ],
+        // LocalSecondaryIndexes: [
+        //     {
+        //         IndexName: 'LSI_1',
+        //         KeySchema: [
+        //             {
+        //                 AttributeName: 'PK',
+        //                 KeyType: 'HASH', // Partition Key
+        //             },
+        //             {
+        //                 AttributeName: 'LSI_1_SK',
+        //                 KeyType: 'RANGE', // Sort Key
+        //             },
+        //         ],
+        //         Projection: {
+        //             NonKeyAttributes: [
+        //                 'article_title',
+        //                 'subscription_start_date',
+        //                 'subscription_end_date',
+        //             ],
+        //             ProjectionType: 'INCLUDE',
+        //         },
+        //     },
+        // ],
         AttributeDefinitions: [
             {
                 AttributeName: 'PK',
@@ -83,6 +106,10 @@ async function createTable() {
                 AttributeName: 'GSI_1_SK',
                 AttributeType: 'S',
             },
+            // {
+            //     AttributeName: 'LSI_1_SK',
+            //     AttributeType: 'S',
+            // },
         ],
         ProvisionedThroughput: {
             ReadCapacityUnits: 10,
@@ -121,6 +148,21 @@ async function createData() {
             }))
             .map((params: PutCommandInput) => ddbDocClient.send(new PutCommand(params)))
     )
+
+    // denormalizing data (don't forget to update when data is updated or deleted)
+    await Promise.all(
+        articles
+            .map((article: Article) => ({
+                TableName: TABLE_NAME,
+                Item: {
+                    PK: article.article_user_id,
+                    SK: `ARTICLES#${article.article_upload_datetime}`,
+                    article_title: article.article_title,
+                    article_id: article.article_id,
+                },
+            }))
+            .map((params: PutCommandInput) => ddbDocClient.send(new PutCommand(params)))
+    )
     
     await Promise.all(
         users
@@ -143,6 +185,22 @@ async function createData() {
                     ...subscription,
                     PK: subscription.subscription_id,
                     SK: '#',
+                },
+            }))
+            .map((params: PutCommandInput) => ddbDocClient.send(new PutCommand(params)))
+    )
+
+    // denormalizing data (don't forget to update when data is updated or deleted)
+    await Promise.all(
+        subscriptions
+            .map((subscription: Subscription) => ({
+                TableName: TABLE_NAME,
+                Item: {
+                    PK: subscription.subscription_user_id,
+                    SK: `SUBSCRIPTIONS#${subscription.subscription_id}`,
+                    subscription_start_date: subscription.subscription_start_date,
+                    subscription_end_date: subscription.subscription_end_date,
+                    subscription_payment_status: subscription.subscription_payment_status,
                 },
             }))
             .map((params: PutCommandInput) => ddbDocClient.send(new PutCommand(params)))
