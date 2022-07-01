@@ -1,18 +1,19 @@
-## dynamodb-playground
+## Dynamodb Knowledge Sharing
+- [Slide](https://docs.google.com/presentation/d/1GX2dxHTsok3OhC6wYEbQi-YoLTzTIXjp141ICED3r8Y/edit?usp=sharing)
 
-## set up aws cli
+## Set up aws cli
 https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
 ```
 aws configure
 ```
 
-## set up dynamodb local
+## Set up dynamodb local
 ```
 docker pull amazon/dynamodb-local
 docker run -p 65000:8000 amazon/dynamodb-local
 ```
 
-## run code
+## Run code
 ```
 npm i
 npm run init
