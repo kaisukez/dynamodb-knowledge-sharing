@@ -1,5 +1,6 @@
 ## Dynamodb Knowledge Sharing
 - [Slide](https://docs.google.com/presentation/d/1GX2dxHTsok3OhC6wYEbQi-YoLTzTIXjp141ICED3r8Y/edit?usp=sharing)
+- Video (comming soon)
 
 ## Set up aws cli
 https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
