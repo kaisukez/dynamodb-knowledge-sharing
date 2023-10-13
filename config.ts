@@ -4,6 +4,10 @@ import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb"
 export const ddbClient = new DynamoDBClient({
     region: 'ap-southeast-1',
     endpoint: 'http://localhost:65000',
+    credentials: {
+        accessKeyId: 'dummy',
+        secretAccessKey: 'dummy',
+    }
 })
 
 const marshallOptions = {

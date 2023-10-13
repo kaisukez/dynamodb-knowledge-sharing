@@ -11,7 +11,7 @@ aws configure
 ## Set up dynamodb local
 ```
 docker pull amazon/dynamodb-local
-docker run -p 65000:8000 amazon/dynamodb-local
+docker run -p 65000:8000 --rm amazon/dynamodb-local
 ```
 
 ## Run code

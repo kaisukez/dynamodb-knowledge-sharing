@@ -13,12 +13,12 @@
   "author": "kaisukez",
   "license": "MIT",
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.49.0",
-    "@aws-sdk/lib-dynamodb": "^3.49.0",
-    "aws-sdk": "^2.1066.0"
+    "@aws-sdk/client-dynamodb": "^3.428.0",
+    "@aws-sdk/lib-dynamodb": "^3.428.0",
+    "aws-sdk": "^2.1473.0"
   },
   "devDependencies": {
-    "ts-node": "^10.4.0",
-    "typescript": "^4.5.5"
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
   }
 }
